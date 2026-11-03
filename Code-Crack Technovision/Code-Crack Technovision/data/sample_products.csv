@@ -1,0 +1,10 @@
+category,title,price,age,condition,original_price
+Laptop,Laptop A,22000,2,Good,45000
+Laptop,Laptop B,18000,3,Average,42000
+Laptop,Laptop C,25000,1,Excellent,48000
+Laptop,Laptop D,20000,2,Good,40000
+Laptop,Laptop E,15000,4,Average,38000
+Bicycle,Riverside City Bike,6800,2,Good,14500
+Bicycle,Rockrider MTB,9700,1,Excellent,21000
+Book,Data Structures in Python,620,1,Excellent,1200
+Gadget,Casio Scientific Calculator,720,2,Good,1350

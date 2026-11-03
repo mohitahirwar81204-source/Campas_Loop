@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CampusLoop is an explainable, budget-aware marketplace for student essentials.">
+  <title>CampusLoop · Smart Student Marketplace</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="commerce-header">
+    <div class="topbar">
+      <a class="brand" href="#top" aria-label="CampusLoop home">
+        <span class="brand-mark">CL</span>
+        <span><strong>CampusLoop</strong><small>smart campus deals</small></span>
+      </a>
+      <div class="header-search" role="search">
+        <span class="search-icon" aria-hidden="true"></span>
+        <input id="headerSearch" type="search" placeholder="Search books, laptops, cycles and more" autocomplete="off">
+        <button id="headerSearchButton" type="button">Search</button>
+      </div>
+      <nav aria-label="Main navigation">
+        <a href="#recommendations">Smart Picks</a>
+        <a href="#marketplace">Explore</a>
+        <button class="button header-sell compact" id="headerAddButton" type="button">+ Sell an item</button>
+      </nav>
+    </div>
+    <div class="category-nav" aria-label="Shop by category">
+      <button type="button" data-shop-category="">All products</button>
+      <button type="button" data-shop-category="Laptop">Laptops</button>
+      <button type="button" data-shop-category="Book">Books</button>
+      <button type="button" data-shop-category="Bicycle">Bicycles</button>
+      <button type="button" data-shop-category="Gadget">Gadgets</button>
+      <button type="button" data-shop-category="Furniture">Furniture</button>
+      <span class="nav-promise">Explainable picks. Zero guesswork.</span>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero panel">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> INDIA'S SMART CAMPUS MARKETPLACE</p>
+        <h1>Campus deals.<br><em>Decoded for you.</em></h1>
+        <p class="hero-text">Shop pre-loved student essentials with transparent price checks, budget-smart ranking, and a reason behind every recommendation.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#marketplace">Explore deals <span>→</span></a>
+          <button class="button secondary" id="heroAddButton" type="button">Sell an item</button>
+          <button class="button import-quiet" id="importButton" type="button">Import data</button>
+          <input id="importInput" type="file" accept=".csv,.json" hidden>
+        </div>
+        <a class="sample-link" href="/sample.csv" download>Download sample CSV</a>
+      </div>
+      <div class="hero-visual" aria-label="Marketplace overview">
+        <div class="visual-orbit orbit-one"></div>
+        <div class="visual-orbit orbit-two"></div>
+        <div class="hero-badge">
+          <span class="badge-icon">✓</span>
+          <small>Best match score</small>
+          <strong id="heroTopScore">—</strong>
+          <span>for your budget</span>
+        </div>
+        <div class="mini-card mini-card-one"><span>₹</span><div><small>Budget-aware</small><strong>No overspending</strong></div></div>
+        <div class="mini-card mini-card-two"><span>◇</span><div><small>Category median</small><strong>Fair-price checks</strong></div></div>
+      </div>
+    </section>
+
+    <section class="metrics" aria-label="Marketplace statistics">
+      <article class="metric-card"><span class="metric-icon coral">01</span><div><strong id="listingCount">—</strong><small>active listings</small></div></article>
+      <article class="metric-card"><span class="metric-icon green">02</span><div><strong id="categoryCount">—</strong><small>student categories</small></div></article>
+      <article class="metric-card"><span class="metric-icon amber">03</span><div><strong id="withinBudgetCount">—</strong><small>within your budget</small></div></article>
+      <article class="metric-card"><span class="metric-icon blue">04</span><div><strong id="unusualCount">—</strong><small>prices to review</small></div></article>
+    </section>
+
+    <section class="category-showcase" aria-labelledby="categoryTitle">
+      <div class="category-heading"><div><p class="eyebrow"><span></span> SHOP YOUR CAMPUS</p><h2 id="categoryTitle">Everything students need</h2></div><a href="#marketplace">View all deals →</a></div>
+      <div class="category-grid">
+        <button type="button" data-shop-category="Laptop"><span class="category-art laptop-art">▰</span><strong>Laptops</strong><small>5 smart deals</small></button>
+        <button type="button" data-shop-category="Book"><span class="category-art book-art">▤</span><strong>Books</strong><small>Study for less</small></button>
+        <button type="button" data-shop-category="Bicycle"><span class="category-art bicycle-art">◎</span><strong>Bicycles</strong><small>Ride to campus</small></button>
+        <button type="button" data-shop-category="Gadget"><span class="category-art gadget-art">◈</span><strong>Gadgets</strong><small>Everyday tech</small></button>
+        <button type="button" data-shop-category="Furniture"><span class="category-art furniture-art">▥</span><strong>Furniture</strong><small>Build your space</small></button>
+      </div>
+    </section>
+
+    <section class="section-block" id="recommendations">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span></span> SMART PICKS</p>
+          <h2>Your top three matches</h2>
+          <p>Adjust what matters and watch the ranking explain itself.</p>
+        </div>
+        <button class="text-button" id="formulaButton" type="button">How scoring works <span>↗</span></button>
+      </div>
+
+      <div class="recommendation-controls panel">
+        <label class="budget-control">
+          <span>Buyer budget</span>
+          <div class="money-input"><b>₹</b><input id="budgetInput" type="number" min="1" step="100" value="23000" aria-label="Buyer budget"></div>
+        </label>
+        <label>
+          <span>Compare category</span>
+          <select id="recommendationCategory"><option value="Laptop">Laptop</option></select>
+        </label>
+        <fieldset class="priority-control">
+          <legend>What matters most?</legend>
+          <div class="segmented" id="priorityTabs">
+            <button type="button" data-priority="balanced" class="active">Balanced</button>
+            <button type="button" data-priority="affordability">Lowest price</button>
+            <button type="button" data-priority="condition">Best condition</button>
+          </div>
+        </fieldset>
+        <button class="button primary update-button" id="updateRecommendations" type="button">Update picks</button>
+      </div>
+
+      <div class="formula-strip" id="formulaStrip" role="status">
+        <span class="pulse-dot"></span>
+        <p><strong>Balanced formula:</strong> 45% affordability + 20% age + 35% condition.</p>
+        <span class="formula-note">Every factor is visible.</span>
+      </div>
+
+      <div class="recommendation-grid" id="recommendationGrid" aria-live="polite">
+        <div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>
+      </div>
+
+      <section class="decision-lab panel" aria-labelledby="decisionLabTitle">
+        <div class="decision-copy">
+          <p class="eyebrow"><span></span> DECISION LAB</p>
+          <h3 id="decisionLabTitle">Same budget.<br><em>Different priorities.</em></h3>
+          <p id="decisionNarrative">We run the same eligible listings through both priority profiles so you can see exactly why the winner changes.</p>
+          <span class="scope-chip" id="comparisonScope">Comparing Laptop listings only</span>
+        </div>
+        <div class="lab-results" id="priorityComparison" aria-live="polite">
+          <div class="lab-skeleton"></div><div class="lab-arrow">→</div><div class="lab-skeleton"></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="section-block" id="marketplace">
+      <div class="section-heading marketplace-heading">
+        <div>
+          <p class="eyebrow"><span></span> CAMPUS DEALS</p>
+          <h2>Explore the marketplace</h2>
+          <p>Great prices, transparent signals, and no category-mixing.</p>
+        </div>
+        <button class="button primary" id="marketAddButton" type="button">+ Sell an item</button>
+      </div>
+
+      <div class="shop-shell">
+        <aside class="filter-sidebar panel">
+          <div class="filter-title"><strong>Filters</strong><button type="button" id="clearFilters">Clear all</button></div>
+          <label class="filter-group"><span>Category</span><select id="categoryFilter"><option value="">All categories</option></select></label>
+          <div class="filter-group">
+            <span>Budget</span>
+            <label class="market-budget-field"><small>Maximum price</small><div><b>₹</b><input id="marketBudgetInput" type="number" min="1" step="100" value="23000" aria-label="Marketplace maximum budget"></div></label>
+            <div class="budget-presets"><button type="button" data-budget="5000">₹5k</button><button type="button" data-budget="15000">₹15k</button><button type="button" data-budget="23000">₹23k</button></div>
+            <label class="budget-check"><input id="budgetOnly" type="checkbox"><span></span> Show items within ₹<span id="budgetLabel">23,000</span></label>
+          </div>
+          <div class="filter-group filter-trust"><span>Smart price check</span><p>Prices are compared only inside the same category using the category median.</p></div>
+          <div class="buyer-shield"><b>✓</b><div><strong>Buyer clarity</strong><small>Flags are signals, never fraud claims.</small></div></div>
+        </aside>
+
+        <div class="product-area">
+          <div class="product-toolbar panel">
+            <label class="search-field">
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="searchInput" type="search" placeholder="Search in marketplace…" autocomplete="off">
+            </label>
+            <span class="result-count" id="resultCount">Loading…</span>
+            <label class="sort-control"><span>Sort</span><select id="sortFilter"><option value="default">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="discount">Biggest discount</option><option value="newest">Newest first</option></select></label>
+          </div>
+
+          <div class="product-grid" id="productGrid" aria-live="polite"></div>
+          <div class="empty-state panel" id="emptyState" hidden>
+            <span>⌕</span><h3>No listings found</h3><p>Try a different search, category, or budget filter.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="trust-note">
+        <span>!</span>
+        <div><strong>A flag starts a conversation—it does not prove fraud.</strong><p>Products may differ in specifications, accessories, urgency, or seller circumstances. Always inspect the item before deciding.</p></div>
+      </aside>
+    </section>
+  </main>
+
+  <footer><div class="brand"><span class="brand-mark small">CL</span><span><strong>CampusLoop</strong><small>Built for smarter student choices.</small></span></div><p>Transparent recommendations · Local prototype · No payments</p></footer>
+
+  <dialog id="listingDialog" class="modal">
+    <form id="listingForm" method="dialog">
+      <div class="modal-heading"><div><p class="eyebrow"><span></span> LISTING DETAILS</p><h2 id="listingDialogTitle">Add a new listing</h2></div><button class="icon-button" type="button" data-close="listingDialog" aria-label="Close">×</button></div>
+      <input type="hidden" id="listingId">
+      <div class="form-grid">
+        <label class="full"><span>Product title *</span><input id="titleField" name="title" required maxlength="160" placeholder="e.g. Scientific Calculator"></label>
+        <label><span>Category *</span><input id="categoryField" name="category" required maxlength="80" list="categoryOptions" placeholder="e.g. Gadget"><datalist id="categoryOptions"></datalist></label>
+        <label><span>Condition</span><select id="conditionField" name="condition"><option value="">Not provided</option><option>Excellent</option><option>Good</option><option>Average</option><option>Fair</option><option>Poor</option></select></label>
+        <label><span>Selling price (₹) *</span><input id="priceField" name="price" type="number" min="1" step="0.01" required></label>
+        <label><span>Original price (₹)</span><input id="originalPriceField" name="original_price" type="number" min="1" step="0.01"></label>
+        <label><span>Age in years</span><input id="ageField" name="age" type="number" min="0" max="100" step="0.5"></label>
+      </div>
+      <p class="form-note">Age, condition, and original price may be left blank. The recommendation will clearly show how missing values are handled.</p>
+      <div class="modal-actions"><button class="button ghost" type="button" data-close="listingDialog">Cancel</button><button class="button primary" id="saveListingButton" type="submit">Save listing</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="formulaDialog" class="modal formula-modal">
+    <div class="modal-heading"><div><p class="eyebrow"><span></span> TRANSPARENT BY DESIGN</p><h2>How recommendations are scored</h2></div><button class="icon-button" type="button" data-close="formulaDialog" aria-label="Close">×</button></div>
+    <p class="modal-intro">Only eligible products at or below the budget are ranked. Each factor becomes a score from 0 to 100, then the selected priority applies its weights.</p>
+    <div class="formula-equation">Final score = <b>price weight × affordability</b> + <b>age weight × age score</b> + <b>condition weight × condition score</b></div>
+    <div class="formula-cards">
+      <article><span>01</span><h3>Affordability</h3><p>100 × (1 − price ÷ budget). A lower eligible price scores higher.</p></article>
+      <article><span>02</span><h3>Age</h3><p>100 × (1 − age ÷ 10). A newer product scores higher.</p></article>
+      <article><span>03</span><h3>Condition</h3><p>Excellent 100, Good 80, Average 60, Fair 35, Poor 15.</p></article>
+    </div>
+    <div class="edge-case-list"><p><strong>Missing values:</strong> neutral score of 50 for age or condition.</p><p><strong>Identical scores:</strong> condition, lower price, younger age, then listing ID.</p><p><strong>Price flags:</strong> more than 35% from category median, only with 3+ comparable items.</p></div>
+    <div class="modal-actions"><button class="button primary" type="button" data-close="formulaDialog">Got it</button></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><span id="toastIcon">✓</span><p id="toastMessage">Saved</p></div>
+  <script src="{{ url_for('static', path='/js/app.js') }}" defer></script>
+</body>
+</html>
